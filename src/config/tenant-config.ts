@@ -5,7 +5,6 @@
 
 import type { ModerationConfig } from "../agents/guardrails/content-moderation.js";
 import type { PIIFilterType } from "../agents/guardrails/pii-filter.js";
-import type { OpenClawConfig } from "./types.js";
 import { loadConfig } from "./io.js";
 
 export interface TenantConfig {
@@ -162,7 +161,7 @@ export function validateTenantConfig(config: TenantConfig): string[] {
   }
 
   // Validate PII filters
-  const validPIIFilters: PIIFilterType[] = new Set([
+  const validPIIFilters = new Set<PIIFilterType>([
     "ssn",
     "credit_card",
     "email",

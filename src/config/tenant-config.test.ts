@@ -136,7 +136,8 @@ describe("Tenant Config", () => {
 
     test("detects invalid PII filter type", () => {
       const config: TenantConfig = {
-        piiFilters: ["ssn", "invalid_type" as any],
+        // @ts-expect-error Testing invalid type
+        piiFilters: ["ssn", "invalid_type"],
       };
 
       const errors = validateTenantConfig(config);

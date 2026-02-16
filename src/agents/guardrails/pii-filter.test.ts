@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { detectPII, filterPII, redactPII, type PIIFilterRule } from "./pii-filter.js";
+import { detectPII, filterPII, type PIIFilterRule } from "./pii-filter.js";
 
 describe("PII Filter", () => {
   describe("SSN Detection", () => {
