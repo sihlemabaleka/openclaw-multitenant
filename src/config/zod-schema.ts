@@ -92,6 +92,20 @@ const MemorySchema = z
   .strict()
   .optional();
 
+const PIIFilterTypeSchema = z.enum(["ssn", "credit_card", "email", "phone", "custom_regex"]);
+
+const TenantOverridesSchema = z
+  .object({
+    userId: z.string().optional(),
+    systemPrompt: z.string().optional(),
+    piiFilters: z.array(PIIFilterTypeSchema).optional(),
+    moderationWebhook: z.string().url().optional(),
+    allowedTools: z.array(z.string()).optional(),
+    blockedTools: z.array(z.string()).optional(),
+  })
+  .strict()
+  .optional();
+
 export const OpenClawSchema = z
   .object({
     meta: z
@@ -101,6 +115,7 @@ export const OpenClawSchema = z
       })
       .strict()
       .optional(),
+    tenantOverrides: TenantOverridesSchema,
     env: z
       .object({
         shellEnv: z
