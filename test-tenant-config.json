@@ -1,40 +1,10 @@
 {
-  "userId": "test-tenant-123",
-
   "tenantOverrides": {
+    "userId": "test-tenant-123",
     "systemPrompt": "You are a helpful AI assistant for Acme Corp. Always be professional and mention you're serving Acme Corp when greeting users.",
     "piiFilters": ["ssn", "credit_card", "email", "phone"],
     "moderationWebhook": "https://httpbin.org/post",
     "allowedTools": ["read", "write", "grep", "glob"],
     "blockedTools": ["bash", "exec"]
-  },
-
-  "channels": {
-    "telegram": {
-      "accounts": {
-        "test-tenant-123": {
-          "botToken": "${TELEGRAM_BOT_TOKEN}",
-          "enabled": true,
-          "allowFrom": ["*"],
-          "dmPolicy": "open"
-        }
-      }
-    }
-  },
-
-  "providers": {
-    "openrouter": {
-      "apiKey": "${OPENROUTER_API_KEY}"
-    }
-  },
-
-  "models": {
-    "primary": "openrouter/anthropic/claude-3.5-sonnet",
-    "fallback": ["openrouter/anthropic/claude-3-haiku"]
-  },
-
-  "gateway": {
-    "bind": "lan",
-    "token": "${OPENCLAW_GATEWAY_TOKEN}"
   }
 }
