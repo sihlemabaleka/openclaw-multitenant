@@ -493,6 +493,8 @@ See `OPENCLAW_HOST_CHANGES.md` for detailed change requests:
 ## Git Commit History
 
 ```bash
+33289d28d feat: add SIGHUP handler for config hot-reload
+a774fd7ce docs: add integration documentation and MVP status report
 fc5d5582f docs: complete Phase 2 - verify BYOC support already exists
 bcd33dad0 fix: make loadTenantConfig synchronous to match loadConfig behavior
 29c5f9e41 fix: linting errors in tenant config and tests
@@ -502,7 +504,7 @@ ee1efdba4 feat: implement Phase 1 - tenant guardrails and BYOC support
 **Total Changes**:
 
 - 12 files created
-- 2,229 insertions
+- 2,255+ insertions
 - 56/57 tests passing
 
 ---
@@ -520,7 +522,7 @@ ee1efdba4 feat: implement Phase 1 - tenant guardrails and BYOC support
 - [x] Comprehensive test coverage (98.2%)
 - [x] Documentation complete
 - [x] Docker image buildable
-- [ ] SIGHUP handler for config hot-reload (needs implementation)
+- [x] SIGHUP handler for config hot-reload
 
 ### openclaw-host Integration (Pending)
 
@@ -537,7 +539,7 @@ ee1efdba4 feat: implement Phase 1 - tenant guardrails and BYOC support
 
 ### Immediate (OpenClaw Fork)
 
-1. **Add SIGHUP handler** to `src/config/config.ts` for hot-reload support
+1. ✅ **SIGHUP handler added** to `src/config/io.ts` for hot-reload support
 2. **Test in Docker container** with sample tenant config
 3. **Push Docker image** to registry
 
