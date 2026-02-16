@@ -626,3 +626,29 @@ export async function writeConfigFile(cfg: OpenClawConfig): Promise<void> {
   clearConfigCache();
   await createConfigIO().writeConfigFile(cfg);
 }
+
+// ============================================================================
+// Config Hot-Reload Support (SIGHUP)
+// ============================================================================
+
+// Add SIGHUP handler for config hot-reload in multi-tenant environments
+process.on("SIGHUP", () => {
+  console.log("📥 Received SIGHUP signal, reloading configuration...");
+  try {
+    clearConfigCache();
+    loadConfig(); // Force reload from disk
+    console.log("✅ Configuration reloaded successfully");
+  } catch (error) {
+    console.error("❌ Failed to reload configuration:", error);
+  }
+});
+
+// Write PID file for signal targeting (e.g., kill -HUP $(cat /var/run/openclaw.pid))
+try {
+  const pidFile = "/var/run/openclaw.pid";
+  fs.writeFileSync(pidFile, process.pid.toString());
+  console.log(`📝 PID file written: ${pidFile} (PID: ${process.pid})`);
+} catch {
+  // Silently ignore PID file write errors (may not have permission in some environments)
+  // The SIGHUP handler will still work if the container/process manager knows the PID
+}
