@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  openclaw-multitenant-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: openclaw-multitenant:test
+    container_name: openclaw-test-tenant
+    restart: unless-stopped
+
+    # Environment variables
+    env_file:
+      - test.env
+
+    # Volume mounts
+    volumes:
+      # Mount test config
+      - ./test-tenant-config.json:/home/node/.openclaw/openclaw.json:ro
+      # Persistent storage for memory/sessions
+      - openclaw-test-data:/home/node/.openclaw/memory
+      # Mount test script directory
+      - ./test-scripts:/test-scripts:ro
+
+    # Port mapping (gateway HTTP server)
+    ports:
+      - "3000:3000"
+
+    # Health check
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:3000/health').then(r => r.ok ? process.exit(0) : process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    # Labels for identification
+    labels:
+      - "openclaw.tenant=test-tenant-123"
+      - "openclaw.environment=test"
+      - "openclaw.version=multitenant-v1"
+
+volumes:
+  openclaw-test-data:
+    driver: local
