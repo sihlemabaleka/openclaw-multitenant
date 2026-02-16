@@ -37,11 +37,11 @@ export interface FullTenantConfig extends TenantConfig {
  * Load tenant configuration from openclaw.json
  * Merges base config with tenant overrides
  *
- * @param configPath - Optional path to config file
+ * @param configPath - Optional path to config file (not currently supported by loadConfig)
  * @returns Tenant configuration object
  */
-export async function loadTenantConfig(configPath?: string): Promise<FullTenantConfig> {
-  const baseConfig = await loadConfig({ configPath });
+export function loadTenantConfig(_configPath?: string): FullTenantConfig {
+  const baseConfig = loadConfig();
 
   // Extract tenant overrides
   const tenantOverrides = baseConfig.tenantOverrides || {};
